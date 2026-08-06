@@ -1,0 +1,43 @@
+.toolbar{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:20px;
+
+}
+
+.toolbar-left,
+
+.toolbar-center,
+
+.toolbar-right{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+}
+
+.toolbar-button{
+
+    padding:8px 16px;
+
+    cursor:pointer;
+
+}
+
+.toolbar-search{
+
+    width:260px;
+
+    padding:8px 10px;
+
+}
