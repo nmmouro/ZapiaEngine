@@ -391,4 +391,67 @@ Estrutura dos dados
 
 ]
 
+
+Exemplo 
+
+renderTree(
+
+    document.querySelector("#menu"),
+
+    {
+
+        data:[
+
+            {
+
+                ID:"1",
+
+                label:"Cadastros",
+
+                expanded:true,
+
+                children:[
+
+                    {
+
+                        ID:"2",
+
+                        label:"Veículos"
+
+                    },
+
+                    {
+
+                        ID:"3",
+
+                        label:"Empregados"
+
+                    }
+
+                ]
+
+            },
+
+            {
+
+                ID:"4",
+
+                label:"Dashboard"
+
+            }
+
+        ],
+
+        onSelect(node){
+
+            console.log(node);
+
+        }
+
+    }
+
+);
+
+
+
 */
