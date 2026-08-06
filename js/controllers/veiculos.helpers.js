@@ -198,3 +198,25 @@ function requireRegistros() {
     return getRegistros();
 
 }
+
+
+/*
+renderForm(
+
+    formulario,
+
+    {
+
+        fields: CAMPOS_VEICULOS,
+
+        buttons: BOTOES_CADASTRO,
+
+        data: registro
+
+    }
+
+);
+
+const dados = getData(formulario);
+
+*/
