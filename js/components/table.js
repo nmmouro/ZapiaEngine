@@ -25,8 +25,6 @@ export function createTable({
 
     columns = [],
 
-    
-
     actions = []
 
 } = {}) {
@@ -61,15 +59,293 @@ export function createTable({
    
     return {
 
-        table,
+    table,
 
-        tbody,
+    tbody,
 
-        rows:
+    rows: new Map(),
 
-            new Map()
+    columns,
 
-    };
+    actions
+
+};
+
+}
+
+// ============================================================================
+// RENDER TABELA
+// ============================================================================
+
+export function renderTable(
+
+    container,
+
+    options
+
+) {
+
+    if (!container) {
+
+        return;
+
+    }
+
+    let tabela =
+
+        tabelas.get(container);
+
+    if (!tabela) {
+
+        tabela =
+
+            createTable(options);
+
+        tabelas.set(
+
+            container,
+
+            tabela
+
+        );
+
+        container.replaceChildren(
+
+            tabela.table
+
+        );
+
+    }
+
+    atualizarBody(
+
+        tabela.tbody,
+
+        options.columns,
+
+        options.data,
+
+        options.actions ?? [],
+
+        tabela.rows
+
+    );
+
+}
+
+// ============================================================================
+// REFRECH TABELA
+// ============================================================================
+
+refreshTable(container, novosDados);
+
+export function refreshTable(
+    container,
+    data
+) {
+
+    const tabela = tabelas.get(container);
+
+    if (!tabela) {
+
+        return;
+
+    }
+
+    atualizarBody(
+
+        tabela.tbody,
+
+        tabela.columns,
+
+        data,
+
+        tabela.actions,
+
+        tabela.rows
+
+    );
+
+}
+
+// ============================================================================
+// UPDATE LINHA
+// ============================================================================
+
+export function updateRow(
+    container,
+    registro
+) {
+
+    const tabela =
+
+        tabelas.get(container);
+
+    if (!tabela) {
+
+        return;
+
+    }
+
+    const linha =
+
+        tabela.rows.get(registro.ID);
+
+    if (!linha) {
+
+        return;
+
+    }
+
+    atualizarLinha(
+
+        linha,
+
+        registro,
+
+        tabela.columns
+
+    );
+
+}
+
+// ============================================================================
+// ADICIONAR LINHA
+// ============================================================================
+
+export function addRow(
+    container,
+    registro
+) {
+
+    const tabela =
+
+        tabelas.get(container);
+
+    if (!tabela) {
+
+        return;
+
+    }
+
+    if (
+
+        tabela.rows.has(registro.ID)
+
+    ) {
+
+        return;
+
+    }
+
+    const linha =
+
+        createRow(
+
+            registro,
+
+            tabela.columns,
+
+            tabela.actions
+
+        );
+
+    tabela.tbody.appendChild(
+
+        linha
+
+    );
+
+    tabela.rows.set(
+
+        registro.ID,
+
+        linha
+
+    );
+
+}
+
+// ============================================================================
+// REMOVER LINHA
+// ============================================================================
+
+export function removeRow(
+    container,
+    id
+) {
+
+    const tabela =
+
+        tabelas.get(container);
+
+    if (!tabela) {
+
+        return;
+
+    }
+
+    const linha =
+
+        tabela.rows.get(id);
+
+    if (!linha) {
+
+        return;
+
+    }
+
+    linha.remove();
+
+    tabela.rows.delete(id);
+
+}
+
+// ============================================================================
+// CLEAR TABELA
+// ============================================================================
+
+export function clearTable(
+    container
+) {
+
+    const tabela =
+
+        tabelas.get(container);
+
+    if (!tabela) {
+
+        return;
+
+    }
+
+    tabela.tbody.replaceChildren();
+
+    tabela.rows.clear();
+
+}
+
+// ============================================================================
+// DESTROY TABELA
+// ============================================================================
+
+export function destroyTable(
+    container
+) {
+
+    const tabela =
+
+        tabelas.get(container);
+
+    if (!tabela) {
+
+        return;
+
+    }
+
+    container.replaceChildren();
+
+    tabelas.delete(container);
 
 }
 
@@ -77,11 +353,15 @@ export function createTable({
 // CABEÇALHO
 // ============================================================================
 
+// ============================================================================
+// CRIAR CABEÇALHO
+// ============================================================================
+
 function createHeader(
 
     columns,
 
-    actions
+    actions = []
 
 ) {
 
@@ -103,7 +383,33 @@ function createHeader(
 
             col.label ??
 
-            col.field;
+            col.field ??
+
+            "";
+
+        if (col.className) {
+
+            th.className =
+
+                col.className;
+
+        }
+
+        if (col.width) {
+
+            th.style.width =
+
+                col.width;
+
+        }
+
+        if (col.align) {
+
+            th.style.textAlign =
+
+                col.align;
+
+        }
 
         tr.appendChild(th);
 
@@ -118,6 +424,10 @@ function createHeader(
         th.textContent =
 
             "Ações";
+
+        th.className =
+
+            "table-actions-header";
 
         tr.appendChild(th);
 
@@ -351,6 +661,7 @@ function atualizarLinha(
 
 }
 
+
 // ============================================================================
 // PREENCHER CÉLULA
 // ============================================================================
@@ -546,65 +857,5 @@ function getValue(
             objeto
 
         );
-
-}
-
-// ============================================================================
-// RENDERIZAR
-// ============================================================================
-
-export function renderTable(
-
-    container,
-
-    options
-
-) {
-
-    if (!container) {
-
-        return;
-
-    }
-
-    let tabela =
-
-        tabelas.get(container);
-
-    if (!tabela) {
-
-        tabela =
-
-            createTable(options);
-
-        tabelas.set(
-
-            container,
-
-            tabela
-
-        );
-
-        container.replaceChildren(
-
-            tabela.table
-
-        );
-
-    }
-
-    atualizarBody(
-
-        tabela.tbody,
-
-        options.columns,
-
-        options.data,
-
-        options.actions ?? [],
-
-        tabela.rows
-
-    );
 
 }
