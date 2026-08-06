@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Painel Frota - Lançamentos</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css">
+
+    <link
+        rel="stylesheet"
+        href="css/table.css">
+
+    <link
+        rel="stylesheet"
+        href="css/forms.css">
+
+    <link
+        rel="stylesheet"
+        href="css/loading.css">
+
+</head>
+
+<body>
+
+    <!-- =============================================================== -->
+    <!-- CABEÇALHO -->
+    <!-- =============================================================== -->
+
+ <header class="header">
+
+          <div class="header-logo">
+              
+            <img src="assets/img/logo.png" alt="Logo Frota">
+              
+            </div>
+
+            <div class="header-title">
+                
+                        <h1> LANÇAMENTOS </h1>
+                
+            </div>
+
+            <div class="header-info">
+                    
+            <div id="clock"
+
+            class="clock"  aria-label="Relógio">
+
+    </div>
+
+    <button
+
+          id="btnFullscreen"
+
+          class="btn-icon"  aria-label="Tela cheia">
+
+      ⛶
+
+    </button>
+
+</div>
+
+     
+</header>
+
+    <main class="container">
+
+        <!-- =========================================================== -->
+        <!-- FORMULÁRIO -->
+        <!-- =========================================================== -->
+
+        <section class="card">
+
+            <h2 id="tituloFormulario">
+
+                Novo lançamento
+
+            </h2>
+
+            <form id="formLancamento">
+
+                <div class="grid">
+
+                    <div class="field">
+
+                        <label for="data">
+
+                            Data
+
+                        </label>
+
+                        <input
+                            type="date"
+                            id="data"
+                            required>
+
+                    </div>
+
+                    <div class="field">
+
+                        <label for="hora">
+
+                            Hora
+
+                        </label>
+
+                        <input
+                            type="time"
+                            id="hora"
+                            required>
+
+                    </div>
+
+                    <div class="field">
+
+                        <label for="empregado">
+
+                            Empregado
+
+                        </label>
+
+                        <select
+                            id="empregado"
+                            required>
+
+                            <option value="">
+
+                                Selecione
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="field">
+
+                        <label for="veiculo">
+
+                            Veículo
+
+                        </label>
+
+                        <select
+                            id="veiculo"
+                            required>
+
+                            <option value="">
+
+                                Selecione
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="field">
+
+                        <label>
+
+                            Passageiro
+
+                        </label>
+
+                        <input
+                            type="text"
+                            name="passageiro">
+
+                    </div>
+
+                    <div class="field">
+
+                        <label>
+
+                            Setor
+
+                        </label>
+
+                        <input
+                            type="text"
+                            name="setor">
+
+                    </div>
+
+                    <div class="field">
+
+                        <label>
+
+                            Motivo
+
+                        </label>
+
+                        <input
+                            type="text"
+                            name="motivo">
+
+                    </div>
+
+                    <div class="field">
+
+                        <label>
+
+                            Itinerário
+
+                        </label>
+
+                        <textarea
+                            name="itinerario"
+                            rows="3"></textarea>
+
+                    </div>
+
+                    <div class="field">
+
+                        <label for="status">
+
+                            Status
+
+                        </label>
+
+                        <select
+                            id="status">
+
+                            <option value="ABERTO">
+
+                                ABERTO
+
+                            </option>
+
+                            <option value="CONCLUÍDO">
+
+                                CONCLUÍDO
+
+                            </option>
+
+                            <option value="CANCELADO">
+
+                                CANCELADO
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div class="buttons">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary">
+
+                        Salvar
+
+                    </button>
+
+                    <button
+                        type="button"
+                        id="btnNovo"
+                        class="btn">
+
+                        Novo
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+        <!-- =========================================================== -->
+        <!-- TABELA -->
+        <!-- =========================================================== -->
+
+        <section class="card">
+
+            <h2>
+
+                Lançamentos cadastrados
+
+            </h2>
+
+            <div id="tabelaLancamentos">
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- =============================================================== -->
+    <!-- SCRIPT -->
+    <!-- =============================================================== -->
+
+    <script
+        type="module"
+        src="js/pages/lancamentos.js">
+    </script>
+
+</body>
+
+</html>

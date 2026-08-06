@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Painel Frota - Empregados</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css">
+
+    <link
+        rel="stylesheet"
+        href="css/table.css">
+
+    <link
+        rel="stylesheet"
+        href="css/forms.css">
+
+    <link
+        rel="stylesheet"
+        href="css/loading.css">
+
+</head>
+
+<body>
+
+    <!-- =============================================================== -->
+    <!-- CABEÇALHO -->
+    <!-- =============================================================== -->
+
+ <header class="header">
+
+          <div class="header-logo">
+              
+            <img src="assets/img/logo.png" alt="Logo Frota">
+              
+            </div>
+
+            <div class="header-title">
+                
+                        <h1> EMPREGADOS </h1>
+                
+            </div>
+
+            <div class="header-info">
+                    
+            <div id="clock"
+
+            class="clock"  aria-label="Relógio">
+
+    </div>
+
+    <button
+
+          id="btnFullscreen"
+
+          class="btn-icon"  aria-label="Tela cheia">
+
+      ⛶
+
+    </button>
+
+</div>
+
+     
+</header>
+
+    <main class="container">
+
+        <!-- =========================================================== -->
+        <!-- FORMULÁRIO -->
+        <!-- =========================================================== -->
+
+        <section class="card">
+
+            <h2 id="tituloFormulario">
+
+                Novo empregado
+
+            </h2>
+
+            <form id="formEmpregado">
+
+                <div class="grid">
+
+                    <div class="field">
+
+                        <label for="data">
+
+                            Data
+
+                        </label>
+
+                        <input
+                            type="date"
+                            id="data"
+                            required>
+
+                    </div>
+                    
+                    <div class="field">
+
+                        <label for="foto">
+
+                            Foto
+
+                        </label>
+
+                        <input
+                            type="text"
+                            id="foto">
+
+                    </div>
+
+                    <div class="field">
+
+                        <label for="empregado">
+
+                            Empregado
+
+                        </label>
+
+                        <input
+                            type="text"
+                            id="empregado"
+                            required>
+
+                    </div>
+
+                    <div class="field">
+
+                        <label for="matricula">
+
+                            Matrícula
+
+                        </label>
+
+                        <input
+                            type="text"
+                            id="matricula"
+                            required>
+
+                    </div>
+
+                    <div class="field">
+
+                        <label for="diretoria">
+
+                            Diretoria
+
+                        </label>
+
+                        <input
+                            type="text"
+                            id="diretoria">
+
+                    </div>
+
+                    <div class="field">
+
+                        <label for="setor">
+
+                            Setor
+
+                        </label>
+
+                        <input
+                            type="text"
+                            id="setor">
+
+                    </div>
+
+                    <div class="field">
+
+                        <label for="usuario">
+
+                            Usuário
+
+                        </label>
+
+                        <input
+                            type="text"
+                            id="usuario">
+
+                    </div>
+
+                    <div class="field">
+
+                        <label for="condicao">
+
+                            Condição
+
+                        </label>
+
+                        <select
+                            id="condicao">
+
+                            <option value="ATIVO">
+
+                                ATIVO
+
+                            </option>
+
+                            <option value="FÉRIAS">
+
+                                FÉRIAS
+
+                            </option>
+
+                            <option value="AFASTADO">
+
+                                AFASTADO
+
+                            </option>
+
+                            <option value="LICENÇA">
+
+                                LICENÇA
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="field">
+
+                        <label for="status">
+
+                            Status
+
+                        </label>
+
+                        <select
+                            id="status">
+
+                            <option value="ATIVO">
+
+                                ATIVO
+
+                            </option>
+
+                            <option value="INATIVO">
+
+                                INATIVO
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div class="buttons">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary">
+
+                        Salvar
+
+                    </button>
+
+                    <button
+                        type="button"
+                        id="btnNovo"
+                        class="btn">
+
+                        Novo
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+        <!-- =========================================================== -->
+        <!-- TABELA -->
+        <!-- =========================================================== -->
+
+        <section class="card">
+
+            <h2>
+
+                Empregados cadastrados
+
+            </h2>
+
+            <div id="tabelaEmpregados">
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- =============================================================== -->
+    <!-- SCRIPT -->
+    <!-- =============================================================== -->
+
+    <script
+        type="module"
+        src="js/pages/empregados.js">
+    </script>
+
+</body>
+
+</html>
