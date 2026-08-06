@@ -1,20 +1,49 @@
 // ============================================================================
-// VEÍCULOS ENGINE
+// VEÍCULOS
 // Painel Frota
 // Arquivo: js/pages/veiculos.js
-// Responsável pela inicialização da página.
 // ============================================================================
 
-import crud from "../crud/crud.veiculos.js";
+import {
+
+    createModule
+
+} from "../engine/module.js";
+
+import {
+
+    SCHEMA_VEICULOS
+
+} from "../schemas/veiculos.schema.js";
+
+import {
+
+    COLUNAS_VEICULOS
+
+} from "../config/tabelas/veiculos.js";
 
 document.addEventListener(
 
     "DOMContentLoaded",
 
-    async () => {
+    () =>
 
-        await crud.load();
+        createModule({
 
-    }
+            entity: "VEICULOS",
+
+            schema: SCHEMA_VEICULOS,
+
+            columns: COLUNAS_VEICULOS,
+
+            form: "#formVeiculo",
+
+            table: "#tabelaVeiculos",
+
+            filter: "#filtroVeiculos",
+
+            permissions: "veiculos"
+
+        })
 
 );
