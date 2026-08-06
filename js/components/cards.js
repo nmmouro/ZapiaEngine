@@ -1,95 +1,444 @@
 // ============================================================================
-// CARD COMPONENT
+// CARDS COMPONENT
 // Painel Frota
-// Arquivo: js/components/card.js
+// Arquivo: js/components/cards.js
+// Responsável pela renderização de Cards.
 // ============================================================================
 
+import {
+
+    createElement,
+
+    append,
+
+    clear,
+
+    destroy,
+
+    getCache,
+
+    setCache,
+
+    removeCache
+
+} from "./engine.js";
+
 // ============================================================================
-// CRIAR CARD
+// CACHE
 // ============================================================================
 
-export function createCard({
+const cardsCache = new WeakMap();
 
-    titulo = "",
+// ============================================================================
+// CRIAR CONTAINER
+// ============================================================================
 
-    valor = "",
+export function createCards({
 
-    subtitulo = "",
+    render,
 
-    icone = "",
-
-    classe = "",
-
-    footer = "",
-
-    onClick = null
+    actions = []
 
 } = {}) {
 
-    const card =
+    const container =
 
-        document.createElement("article");
+        createElement(
 
-    card.className =
+            "div",
 
-        `card ${classe}`.trim();
+            {
 
-    card.innerHTML = `
+                className:
 
-        <header class="card-header">
+                    "cards"
 
-            <span class="card-icon">
+            }
 
-                ${icone}
+        );
 
-            </span>
+    return {
 
-            <h3 class="card-title">
+        container,
 
-                ${titulo}
+        render,
 
-            </h3>
+        actions,
 
-        </header>
+        cards:
 
-        <section class="card-body">
+            new Map()
 
-            <div class="card-value">
+    };
 
-                ${valor}
+}
 
-            </div>
+// ============================================================================
+// RENDER
+// ============================================================================
 
-            <small class="card-subtitle">
+export function renderCards(
 
-                ${subtitulo}
+    element,
 
-            </small>
+    options
 
-        </section>
+) {
 
-        <footer class="card-footer">
+    if (!element) {
 
-            ${footer}
+        return;
 
-        </footer>
+    }
 
-    `;
+    let instancia =
 
-    if (typeof onClick === "function") {
+        cardsCache.get(element);
 
-        card.classList.add("clickable");
+    if (!instancia) {
 
-        card.addEventListener(
+        instancia =
 
-            "click",
+            createCards(options);
 
-            () => onClick(card)
+        cardsCache.set(
+
+            element,
+
+            instancia
+
+        );
+
+        element.replaceChildren(
+
+            instancia.container
 
         );
 
     }
 
-    return card;
+    refreshCards(
+
+        element,
+
+        options.data ?? []
+
+    );
+
+}
+
+// ============================================================================
+// REFRESH
+// ============================================================================
+
+export function refreshCards(
+
+    element,
+
+    data = []
+
+) {
+
+    const instancia =
+
+        cardsCache.get(element);
+
+    if (!instancia) {
+
+        return;
+
+    }
+
+    const existentes =
+
+        new Set();
+
+    data.forEach(item => {
+
+        existentes.add(
+
+            item.ID
+
+        );
+
+        if (
+
+            instancia.cards.has(item.ID)
+
+        ) {
+
+            updateCard(
+
+                element,
+
+                item
+
+            );
+
+        }
+
+        else {
+
+            addCard(
+
+                element,
+
+                item
+
+            );
+
+        }
+
+    });
+
+    [...instancia.cards.keys()]
+
+        .forEach(id => {
+
+            if (
+
+                !existentes.has(id)
+
+            ) {
+
+                removeCard(
+
+                    element,
+
+                    id
+
+                );
+
+            }
+
+        });
+
+}
+
+// ============================================================================
+// ADICIONAR
+// ============================================================================
+
+export function addCard(
+
+    element,
+
+    registro
+
+) {
+
+    const instancia =
+
+        cardsCache.get(element);
+
+    if (!instancia) {
+
+        return;
+
+    }
+
+    const card =
+
+        instancia.render(
+
+            registro
+
+        );
+
+    card.dataset.id =
+
+        registro.ID;
+
+    instancia.cards.set(
+
+        registro.ID,
+
+        card
+
+    );
+
+    append(
+
+        instancia.container,
+
+        card
+
+    );
+
+}
+
+// ============================================================================
+// UPDATE
+// ============================================================================
+
+export function updateCard(
+
+    element,
+
+    registro
+
+) {
+
+    const instancia =
+
+        cardsCache.get(element);
+
+    if (!instancia) {
+
+        return;
+
+    }
+
+    const antigo =
+
+        instancia.cards.get(
+
+            registro.ID
+
+        );
+
+    if (!antigo) {
+
+        addCard(
+
+            element,
+
+            registro
+
+        );
+
+        return;
+
+    }
+
+    const novo =
+
+        instancia.render(
+
+            registro
+
+        );
+
+    novo.dataset.id =
+
+        registro.ID;
+
+    antigo.replaceWith(
+
+        novo
+
+    );
+
+    instancia.cards.set(
+
+        registro.ID,
+
+        novo
+
+    );
+
+}
+
+// ============================================================================
+// REMOVER
+// ============================================================================
+
+export function removeCard(
+
+    element,
+
+    id
+
+) {
+
+    const instancia =
+
+        cardsCache.get(element);
+
+    if (!instancia) {
+
+        return;
+
+    }
+
+    const card =
+
+        instancia.cards.get(id);
+
+    if (!card) {
+
+        return;
+
+    }
+
+    destroy(card);
+
+    instancia.cards.delete(id);
+
+}
+
+// ============================================================================
+// LIMPAR
+// ============================================================================
+
+export function clearCards(
+
+    element
+
+) {
+
+    const instancia =
+
+        cardsCache.get(element);
+
+    if (!instancia) {
+
+        return;
+
+    }
+
+    clear(
+
+        instancia.container
+
+    );
+
+    instancia.cards.clear();
+
+}
+
+// ============================================================================
+// DESTRUIR
+// ============================================================================
+
+export function destroyCards(
+
+    element
+
+) {
+
+    const instancia =
+
+        cardsCache.get(element);
+
+    if (!instancia) {
+
+        return;
+
+    }
+
+    destroy(
+
+        instancia.container
+
+    );
+
+    instancia.cards.clear();
+
+    cardsCache.delete(
+
+        element
+
+    );
 
 }
