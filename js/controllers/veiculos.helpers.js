@@ -219,4 +219,55 @@ renderForm(
 
 const dados = getData(formulario);
 
+
+
+
+
+
+
+
+
+import {
+
+    renderCards
+
+} from "../components/cards.js";
+
+renderCards(
+
+    document.querySelector("#cardsVeiculos"),
+
+    {
+
+        data: lista,
+
+        render(item) {
+
+            const card =
+
+                document.createElement("div");
+
+            card.className =
+
+                "card";
+
+            card.innerHTML = `
+
+                <h3>${item.Placa}</h3>
+
+                <p>${item.Modelo}</p>
+
+                <p>${item.Status}</p>
+
+            `;
+
+            return card;
+
+        }
+
+    }
+
+);
+
+
 */
