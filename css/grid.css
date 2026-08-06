@@ -1,0 +1,13 @@
+.grid{
+
+    display:grid;
+
+    width:100%;
+
+}
+
+.grid-item{
+
+    min-width:0;
+
+}
