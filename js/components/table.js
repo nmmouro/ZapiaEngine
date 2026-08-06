@@ -7,6 +7,31 @@
 
 import {
 
+    getCache,
+
+    setCache,
+
+    removeCache,
+
+    createElement,
+
+    append,
+
+    clear
+
+} from "./engine.js";
+
+
+
+
+
+
+
+
+
+
+import {
+
     renderStatus
 
 } from "../ui/status.js";
