@@ -270,4 +270,69 @@ renderCards(
 );
 
 
+
+
+
+
+NAVEGAÇÃO
+
+export function nextMonth(container){
+
+    const c = calendars.get(container);
+
+    c.date.setMonth(
+
+        c.date.getMonth()+1
+
+    );
+
+    draw(c);
+
+}
+
+export function previousMonth(container){
+
+    const c = calendars.get(container);
+
+    c.date.setMonth(
+
+        c.date.getMonth()-1
+
+    );
+
+    draw(c);
+
+}
+
+export function today(container){
+
+    const c = calendars.get(container);
+
+    c.date = new Date();
+
+    draw(c);
+
+}
+
+export function setDate(
+
+    container,
+
+    data
+
+){
+
+    const c = calendars.get(container);
+
+    c.date = new Date(data);
+
+    draw(c);
+
+}
+
+export function getDate(container){
+
+    return calendars.get(container)?.date;
+
+}
 */
