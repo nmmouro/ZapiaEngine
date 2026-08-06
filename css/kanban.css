@@ -1,0 +1,46 @@
+.kanban{
+    display:flex;
+    gap:16px;
+    align-items:flex-start;
+}
+
+.kanban-column{
+    flex:1;
+    min-width:260px;
+    background:#f4f4f4;
+    border-radius:6px;
+}
+
+.kanban-header{
+    padding:12px;
+    font-weight:bold;
+    border-bottom:1px solid #ddd;
+}
+
+.kanban-body{
+    padding:10px;
+    min-height:300px;
+}
+
+.kanban-card{
+    background:#fff;
+    border-radius:6px;
+    padding:10px;
+    margin-bottom:10px;
+    cursor:pointer;
+    box-shadow:0 1px 3px rgba(0,0,0,.15);
+}
+
+.kanban-title{
+    font-weight:bold;
+}
+
+.kanban-subtitle{
+    color:#666;
+    font-size:13px;
+}
+
+.kanban-description{
+    margin-top:6px;
+    font-size:13px;
+}
