@@ -15,69 +15,263 @@ import {
 // CACHE
 // ============================================================================
 
-const tabelas = new WeakMap();
+// ============================================================================
+// FORM COMPONENT
+// Painel Frota
+// Arquivo: js/components/form.js
+// Responsável pela criação dinâmica de formulários.
+// ============================================================================
+
+const formularios = new WeakMap();
 
 // ============================================================================
 // CRIAR TABELA
 // ============================================================================
 
-export function createTable({
+export function createForm({
 
-    columns = [],
+    fields = [],
 
-    actions = []
+    buttons = []
 
 } = {}) {
 
-    const table =
+    const form = document.createElement("form");
 
-        document.createElement("table");
+    form.className = "form-engine";
 
-    table.className = "table";
+    fields.forEach(field => {
 
-    const thead =
+        form.appendChild(
 
-        createHeader(
-
-            columns,
-
-            actions
+            createField(field)
 
         );
 
-    const tbody =
+    });
 
-        document.createElement("tbody");
+    if (buttons.length) {
 
-    table.append(
+        form.appendChild(
 
-        thead,
+            createButtons(buttons)
 
-        tbody
+        );
 
-    );
-   
+    }
+
     return {
 
-    table,
+        form,
 
-    tbody,
+        fields
 
-    rows: new Map(),
-
-    columns,
-
-    actions
-
-};
+    };
 
 }
 
 // ============================================================================
-// RENDER TABELA
+// CRIAR FIELD
 // ============================================================================
 
-export function renderTable(
+function createField(config) {
+
+    const wrapper = document.createElement("div");
+
+    wrapper.className = "form-group";
+
+    wrapper.append(
+
+        createLabel(config),
+
+        createInput(config)
+
+    );
+
+    return wrapper;
+
+}
+
+// ============================================================================
+// CRIAR LABEL
+// ============================================================================
+
+function createLabel(config) {
+
+    const label = document.createElement("label");
+
+    label.htmlFor = config.field;
+
+    label.textContent =
+
+        config.label ??
+
+        config.field;
+
+    return label;
+
+}
+
+// ============================================================================
+// CRIAR INPUT
+// ============================================================================
+
+function createInput(config) {
+
+    switch (config.type) {
+
+        case "select":
+
+            return createSelect(config);
+
+        case "textarea":
+
+            return createTextarea(config);
+
+        case "checkbox":
+
+            return createCheckbox(config);
+
+        default:
+
+            return createText(config);
+
+    }
+
+}
+
+// ============================================================================
+// CRIAR TEXTO
+// ============================================================================
+
+function createText(config) {
+
+    const input = document.createElement("input");
+
+    input.type = config.type ?? "text";
+
+    input.id = config.field;
+
+    input.name = config.field;
+
+    input.required =
+
+        config.required ?? false;
+
+    return input;
+
+}
+
+// ============================================================================
+// CRIAR SELECT
+// ============================================================================
+
+
+function createSelect(config) {
+
+    const select = document.createElement("select");
+
+    select.id = config.field;
+
+    select.name = config.field;
+
+    (config.options ?? []).forEach(opcao => {
+
+        const option = document.createElement("option");
+
+        option.value = opcao;
+
+        option.textContent = opcao;
+
+        select.appendChild(option);
+
+    });
+
+    return select;
+
+}
+
+// ============================================================================
+// CRIAR TEXTO REAL
+// ============================================================================
+
+function createTextarea(config) {
+
+    const textarea =
+
+        document.createElement("textarea");
+
+    textarea.id = config.field;
+
+    textarea.name = config.field;
+
+    return textarea;
+
+}
+
+// ============================================================================
+// CRIAR CHECKBOX
+// ============================================================================
+
+function createCheckbox(config) {
+
+    const input =
+
+        document.createElement("input");
+
+    input.type = "checkbox";
+
+    input.id = config.field;
+
+    input.name = config.field;
+
+    return input;
+
+}
+
+// ============================================================================
+// CRIAR BOTÃO
+// ============================================================================
+
+function createButtons(buttons) {
+
+    const footer =
+
+        document.createElement("div");
+
+    footer.className = "form-actions";
+
+    buttons.forEach(config => {
+
+        const button =
+
+            document.createElement("button");
+
+        button.type =
+
+            config.type ?? "button";
+
+        button.textContent =
+
+            config.label;
+
+        button.className =
+
+            config.className ?? "";
+
+        footer.appendChild(button);
+
+    });
+
+    return footer;
+
+}
+
+// ============================================================================
+// RENDER FORM
+// ============================================================================
+
+export function renderForm(
 
     container,
 
@@ -91,771 +285,176 @@ export function renderTable(
 
     }
 
-    let tabela =
+    let formulario =
 
-        tabelas.get(container);
+        formularios.get(container);
 
-    if (!tabela) {
+    if (!formulario) {
 
-        tabela =
+        formulario =
 
-            createTable(options);
+            createForm(options);
 
-        tabelas.set(
+        formularios.set(
 
             container,
 
-            tabela
+            formulario
 
         );
 
         container.replaceChildren(
 
-            tabela.table
+            formulario.form
 
         );
 
     }
 
-    atualizarBody(
+    if (options.data) {
 
-        tabela.tbody,
+        setData(
 
-        options.columns,
+            container,
 
-        options.data,
-
-        options.actions ?? [],
-
-        tabela.rows
-
-    );
-
-}
-
-// ============================================================================
-// REFRECH TABELA
-// ============================================================================
-
-refreshTable(container, novosDados);
-
-export function refreshTable(
-    container,
-    data
-) {
-
-    const tabela = tabelas.get(container);
-
-    if (!tabela) {
-
-        return;
-
-    }
-
-    atualizarBody(
-
-        tabela.tbody,
-
-        tabela.columns,
-
-        data,
-
-        tabela.actions,
-
-        tabela.rows
-
-    );
-
-}
-
-// ============================================================================
-// UPDATE LINHA
-// ============================================================================
-
-export function updateRow(
-    container,
-    registro
-) {
-
-    const tabela =
-
-        tabelas.get(container);
-
-    if (!tabela) {
-
-        return;
-
-    }
-
-    const linha =
-
-        tabela.rows.get(registro.ID);
-
-    if (!linha) {
-
-        return;
-
-    }
-
-    atualizarLinha(
-
-        linha,
-
-        registro,
-
-        tabela.columns
-
-    );
-
-}
-
-// ============================================================================
-// ADICIONAR LINHA
-// ============================================================================
-
-export function addRow(
-    container,
-    registro
-) {
-
-    const tabela =
-
-        tabelas.get(container);
-
-    if (!tabela) {
-
-        return;
-
-    }
-
-    if (
-
-        tabela.rows.has(registro.ID)
-
-    ) {
-
-        return;
-
-    }
-
-    const linha =
-
-        createRow(
-
-            registro,
-
-            tabela.columns,
-
-            tabela.actions
+            options.data
 
         );
 
-    tabela.tbody.appendChild(
-
-        linha
-
-    );
-
-    tabela.rows.set(
-
-        registro.ID,
-
-        linha
-
-    );
+    }
 
 }
 
 // ============================================================================
-// REMOVER LINHA
+// SET DATA
 // ============================================================================
 
-export function removeRow(
+export function setData(
+
     container,
-    id
+
+    dados
+
 ) {
 
-    const tabela =
+    const formulario =
 
-        tabelas.get(container);
+        formularios.get(container);
 
-    if (!tabela) {
-
-        return;
-
-    }
-
-    const linha =
-
-        tabela.rows.get(id);
-
-    if (!linha) {
+    if (!formulario) {
 
         return;
 
     }
 
-    linha.remove();
+    Object.entries(dados).forEach(
 
-    tabela.rows.delete(id);
+        ([campo, valor]) => {
+
+            const input =
+
+                formulario.form.elements[campo];
+
+            if (!input) {
+
+                return;
+
+            }
+
+            if (input.type === "checkbox") {
+
+                input.checked =
+
+                    Boolean(valor);
+
+            }
+
+            else {
+
+                input.value =
+
+                    valor ?? "";
+
+            }
+
+        }
+
+    );
 
 }
 
 // ============================================================================
-// CLEAR TABELA
+// GET DATA
 // ============================================================================
 
-export function clearTable(
-    container
-) {
+export function getData(container) {
 
-    const tabela =
+    const formulario =
 
-        tabelas.get(container);
+        formularios.get(container);
 
-    if (!tabela) {
+    if (!formulario) {
 
-        return;
+        return {};
 
     }
 
-    tabela.tbody.replaceChildren();
+    const dados = {};
 
-    tabela.rows.clear();
+    [...formulario.form.elements].forEach(elemento => {
 
-}
-
-// ============================================================================
-// DESTROY TABELA
-// ============================================================================
-
-export function destroyTable(
-    container
-) {
-
-    const tabela =
-
-        tabelas.get(container);
-
-    if (!tabela) {
-
-        return;
-
-    }
-
-    container.replaceChildren();
-
-    tabelas.delete(container);
-
-}
-
-// ============================================================================
-// CABEÇALHO
-// ============================================================================
-
-// ============================================================================
-// CRIAR CABEÇALHO
-// ============================================================================
-
-function createHeader(
-
-    columns,
-
-    actions = []
-
-) {
-
-    const thead =
-
-        document.createElement("thead");
-
-    const tr =
-
-        document.createElement("tr");
-
-    columns.forEach(col => {
-
-        const th =
-
-            document.createElement("th");
-
-        th.textContent =
-
-            col.label ??
-
-            col.field ??
-
-            "";
-
-        if (col.className) {
-
-            th.className =
-
-                col.className;
-
-        }
-
-        if (col.width) {
-
-            th.style.width =
-
-                col.width;
-
-        }
-
-        if (col.align) {
-
-            th.style.textAlign =
-
-                col.align;
-
-        }
-
-        tr.appendChild(th);
-
-    });
-
-    if (actions.length) {
-
-        const th =
-
-            document.createElement("th");
-
-        th.textContent =
-
-            "Ações";
-
-        th.className =
-
-            "table-actions-header";
-
-        tr.appendChild(th);
-
-    }
-
-    thead.appendChild(tr);
-
-    return thead;
-
-}
-
-// ============================================================================
-// ATUALIZAR CORPO
-// ============================================================================
-
-function atualizarBody(
-
-    tbody,
-
-    columns,
-
-    data,
-
-    actions,
-
-    rows
-
-) {
-
-    if (
-
-        !Array.isArray(data) ||
-
-        data.length === 0
-
-    ) {
-
-        tbody.replaceChildren(
-
-            createEmptyRow(
-
-                columns.length +
-
-                (actions.length ? 1 : 0)
-
-            )
-
-        );
-
-        rows.clear();
-
-        return;
-
-    }
-
-    const existentes =
-
-        new Set();
-
-    data.forEach(item => {
-
-        const id =
-
-            item.ID;
-
-        existentes.add(id);
-
-        if (
-
-            rows.has(id)
-
-        ) {
-
-            atualizarLinha(
-
-                rows.get(id),
-
-                item,
-
-                columns
-
-            );
-
-        }
-
-        else {
-
-            const linha =
-
-                createRow(
-
-                    item,
-
-                    columns,
-
-                    actions
-
-                );
-
-            tbody.appendChild(
-
-                linha
-
-            );
-
-            rows.set(
-
-                id,
-
-                linha
-
-            );
-
-        }
-
-    });
-
-    [...rows.keys()].forEach(id => {
-
-        if (
-
-            existentes.has(id)
-
-        ) {
+        if (!elemento.name) {
 
             return;
 
         }
 
-        rows.get(id).remove();
+        dados[elemento.name] =
 
-        rows.delete(id);
+            elemento.type === "checkbox"
 
-    });
+                ? elemento.checked
 
-}
-
-// ============================================================================
-// CRIAR LINHA
-// ============================================================================
-
-function createRow(
-
-    item,
-
-    columns,
-
-    actions
-
-) {
-
-    const tr =
-
-        document.createElement("tr");
-
-    tr.dataset.id =
-
-        item.ID;
-
-    columns.forEach(col => {
-
-        const td =
-
-            document.createElement("td");
-
-        preencherCelula(
-
-            td,
-
-            item,
-
-            col
-
-        );
-
-        tr.appendChild(td);
+                : elemento.value;
 
     });
 
-    if (actions.length) {
-
-        tr.appendChild(
-
-            createActions(
-
-                item,
-
-                actions
-
-            )
-
-        );
-
-    }
-
-    return tr;
+    return dados;
 
 }
 
 // ============================================================================
-// ATUALIZAR LINHA
+// CLEAR FORM
 // ============================================================================
 
-function atualizarLinha(
+export function clearForm(container) {
 
-    tr,
+    const formulario =
 
-    item,
+        formularios.get(container);
 
-    columns
-
-) {
-
-    columns.forEach(
-
-        (col, indice) => {
-
-            preencherCelula(
-
-                tr.children[indice],
-
-                item,
-
-                col
-
-            );
-
-        }
-
-    );
-
-}
-
-
-// ============================================================================
-// PREENCHER CÉLULA
-// ============================================================================
-
-function preencherCelula(
-
-    td,
-
-    item,
-
-    col
-
-) {
-
-    const valor =
-
-        getValue(
-
-            item,
-
-            col.field
-
-        );
-
-    if (
-
-        typeof col.render ===
-
-        "function"
-
-    ) {
-
-        td.innerHTML =
-
-            col.render(
-
-                valor,
-
-                item
-
-            );
-
-    }
-
-    else if (
-
-        col.type ===
-
-        "status"
-
-    ) {
-
-        td.innerHTML =
-
-            renderStatus(
-
-                valor
-
-            );
-
-    }
-
-    else {
-
-        td.textContent =
-
-            valor ?? "";
-
-    }
+    formulario?.form.reset();
 
 }
 
 // ============================================================================
-// AÇÕES
+// DESTROY FORM
 // ============================================================================
 
-function createActions(
+export function destroyForm(container) {
 
-    item,
+    const formulario =
 
-    actions
+        formularios.get(container);
 
-) {
+    if (!formulario) {
 
-    const td =
-
-        document.createElement("td");
-
-    td.className =
-
-        "table-actions";
-
-    actions.forEach(action => {
-
-        const button =
-
-            document.createElement("button");
-
-        button.type =
-
-            "button";
-
-        button.className =
-
-            action.className ?? "";
-
-        button.textContent =
-
-            action.label;
-
-        button.addEventListener(
-
-            "click",
-
-            () =>
-
-                action.onClick(item)
-
-        );
-
-        td.appendChild(button);
-
-    });
-
-    return td;
-
-}
-
-// ============================================================================
-// LINHA VAZIA
-// ============================================================================
-
-function createEmptyRow(
-
-    colspan
-
-) {
-
-    const tr =
-
-        document.createElement("tr");
-
-    const td =
-
-        document.createElement("td");
-
-    td.colSpan =
-
-        colspan;
-
-    td.className =
-
-        "table-empty";
-
-    td.textContent =
-
-        "Nenhum registro encontrado.";
-
-    tr.appendChild(td);
-
-    return tr;
-
-}
-
-// ============================================================================
-// OBTER VALOR
-// ============================================================================
-
-function getValue(
-
-    objeto,
-
-    caminho
-
-) {
-
-    if (!caminho) {
-
-        return "";
+        return;
 
     }
 
-    return caminho
+    formulario.form.remove();
 
-        .split(".")
-
-        .reduce(
-
-            (valor, chave) =>
-
-                valor?.[chave],
-
-            objeto
-
-        );
+    formularios.delete(container);
 
 }
