@@ -363,6 +363,30 @@ export function setPosition(
 
 }
 
+
+COMO USAR====================================
+
+
+import {
+
+    success,
+
+    error
+
+} from "../components/toast.js";
+
+success(
+
+    "Veículo cadastrado com sucesso."
+
+);
+
+error(
+
+    "Falha ao excluir veículo."
+
+);
+
 */
 
 
