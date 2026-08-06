@@ -1,0 +1,39 @@
+.tree{
+
+    font-size:14px;
+
+}
+
+.tree-node{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    padding:4px;
+
+    cursor:pointer;
+
+}
+
+.tree-node:hover{
+
+    background:#f4f4f4;
+
+}
+
+.tree-arrow{
+
+    width:18px;
+
+    text-align:center;
+
+}
+
+.tree-label{
+
+    flex:1;
+
+}
