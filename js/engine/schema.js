@@ -21,13 +21,63 @@ export function createSchema({
 
     title = "",
 
+    description = "",
+
     icon = "",
 
     primaryKey = "ID",
 
-    fields = []
+    service = null,
 
-}) {
+    fields = [],
+
+    containers = {},
+
+    permissions = "",
+
+    actions = [],
+
+    options = {},
+
+    defaultValues = {},
+
+    defaultSort = null,
+
+    defaultFilter = {},
+
+    pageSize = 20,
+
+    autoLoad = true
+
+} = {}) {
+
+    if (!entity) {
+
+        throw new Error(
+
+            "Schema sem entidade."
+
+        );
+
+    }
+
+    if (
+
+        schemas.has(
+
+            entity
+
+        )
+
+    ) {
+
+        return schemas.get(
+
+            entity
+
+        );
+
+    }
 
     const schema = {
 
@@ -35,11 +85,33 @@ export function createSchema({
 
         title,
 
+        description,
+
         icon,
 
         primaryKey,
 
-        fields
+        service,
+
+        fields,
+
+        containers,
+
+        permissions,
+
+        actions,
+
+        options,
+
+        defaultValues,
+
+        defaultSort,
+
+        defaultFilter,
+
+        pageSize,
+
+        autoLoad
 
     };
 
@@ -74,24 +146,6 @@ export function getSchema(
 }
 
 // ============================================================================
-// REMOVE
-// ============================================================================
-
-export function removeSchema(
-
-    entity
-
-) {
-
-    schemas.delete(
-
-        entity
-
-    );
-
-}
-
-// ============================================================================
 // EXISTS
 // ============================================================================
 
@@ -110,16 +164,20 @@ export function hasSchema(
 }
 
 // ============================================================================
-// LIST
+// REMOVE
 // ============================================================================
 
-export function getSchemas() {
+export function removeSchema(
 
-    return [
+    entity
 
-        ...schemas.values()
+) {
 
-    ];
+    schemas.delete(
+
+        entity
+
+    );
 
 }
 
@@ -130,6 +188,20 @@ export function getSchemas() {
 export function clearSchemas() {
 
     schemas.clear();
+
+}
+
+// ============================================================================
+// LIST
+// ============================================================================
+
+export function getSchemas() {
+
+    return [
+
+        ...schemas.values()
+
+    ];
 
 }
 
@@ -149,19 +221,13 @@ export function getField(
 
         entity
 
-    )
+    )?.fields.find(
 
-        ?.fields
+        field =>
 
-        .find(
+            field.name === name
 
-            field =>
-
-                field.name ===
-
-                name
-
-        );
+    );
 
 }
 
@@ -280,6 +346,228 @@ export function getRequiredFields(
         field =>
 
             field.required
+
+    );
+
+}
+
+// ============================================================================
+// CONTAINERS
+// ============================================================================
+
+export function getContainers(
+
+    entity
+
+) {
+
+    return (
+
+        getSchema(
+
+            entity
+
+        )?.containers ??
+
+        {}
+
+    );
+
+}
+
+// ============================================================================
+// SERVICE
+// ============================================================================
+
+export function getService(
+
+    entity
+
+) {
+
+    return getSchema(
+
+        entity
+
+    )?.service;
+
+}
+
+// ============================================================================
+// PERMISSIONS
+// ============================================================================
+
+export function getPermissions(
+
+    entity
+
+) {
+
+    return getSchema(
+
+        entity
+
+    )?.permissions;
+
+}
+
+// ============================================================================
+// ACTIONS
+// ============================================================================
+
+export function getActions(
+
+    entity
+
+) {
+
+    return (
+
+        getSchema(
+
+            entity
+
+        )?.actions ??
+
+        []
+
+    );
+
+}
+
+// ============================================================================
+// OPTIONS
+// ============================================================================
+
+export function getOptions(
+
+    entity
+
+) {
+
+    return (
+
+        getSchema(
+
+            entity
+
+        )?.options ??
+
+        {}
+
+    );
+
+}
+
+// ============================================================================
+// DEFAULT SORT
+// ============================================================================
+
+export function getDefaultSort(
+
+    entity
+
+) {
+
+    return getSchema(
+
+        entity
+
+    )?.defaultSort;
+
+}
+
+// ============================================================================
+// DEFAULT FILTER
+// ============================================================================
+
+export function getDefaultFilter(
+
+    entity
+
+) {
+
+    return (
+
+        getSchema(
+
+            entity
+
+        )?.defaultFilter ??
+
+        {}
+
+    );
+
+}
+
+// ============================================================================
+// DEFAULT VALUES
+// ============================================================================
+
+export function getDefaultValues(
+
+    entity
+
+) {
+
+    return (
+
+        getSchema(
+
+            entity
+
+        )?.defaultValues ??
+
+        {}
+
+    );
+
+}
+
+// ============================================================================
+// PAGE SIZE
+// ============================================================================
+
+export function getPageSize(
+
+    entity
+
+) {
+
+    return (
+
+        getSchema(
+
+            entity
+
+        )?.pageSize ??
+
+        20
+
+    );
+
+}
+
+// ============================================================================
+// AUTO LOAD
+// ============================================================================
+
+export function isAutoLoad(
+
+    entity
+
+) {
+
+    return (
+
+        getSchema(
+
+            entity
+
+        )?.autoLoad ??
+
+        true
 
     );
 
