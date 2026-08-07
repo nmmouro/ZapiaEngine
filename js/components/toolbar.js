@@ -514,15 +514,27 @@ export function disableButton(
 
 ){
 
-    toolbars
+    const toolbar = toolbars.get(container);
 
-        .get(container)
 
-        ?.buttons
+    if(!toolbar){
 
-        .get(id)
+        return;
 
-        .disabled=true;
+    }
+
+
+    const button = toolbar.buttons.get(id);
+
+
+    if(!button){
+
+        return;
+
+    }
+
+
+    button.disabled = true;
 
 }
 
