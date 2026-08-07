@@ -91,7 +91,6 @@ export function createDataSource({
         return this.get(id);
     },
 
-    ...
 };
 
 
