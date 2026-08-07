@@ -2,107 +2,61 @@
 // VEÍCULOS SERVICE
 // Painel Frota
 // Arquivo: js/services/veiculos.js
-// Responsável pela comunicação com a API de Veículos.
+// Responsável pelos serviços da entidade VEÍCULOS.
 // ============================================================================
 
 import {
 
-    listar,
-    buscar,
-    salvar,
-    editar,
-    excluir
+    createCrudService
 
-} from "../api/api.js";
+} from "./crudService.js";
 
 // ============================================================================
-// CONSTANTES
+// CONFIGURAÇÃO
 // ============================================================================
 
-const ABA = "VEICULOS";
+const ENTITY = "VEICULOS";
 
 // ============================================================================
-// LISTAR
+// SERVICE
 // ============================================================================
 
-export async function obterVeiculos() {
+const service = createCrudService({
 
-    return await listar(
+    entity: ENTITY
 
-        ABA
-
-    );
-
-}
+});
 
 // ============================================================================
-// BUSCAR
+// EXPORTAÇÃO
 // ============================================================================
 
-export async function obterVeiculo(id) {
-
-    return await buscar(
-
-        ABA,
-
-        id
-
-    );
-
-}
+export default service;
 
 // ============================================================================
-// SALVAR
+// COMPATIBILIDADE
 // ============================================================================
 
-export async function salvarVeiculo(dados) {
+export const listarVeiculos =
+    service.list;
 
-    return await salvar(
+export const obterVeiculo =
+    service.get;
 
-        ABA,
+export const salvarVeiculo =
+    service.create;
 
-        dados
+export const atualizarVeiculo =
+    service.update;
 
-    );
+export const excluirVeiculo =
+    service.remove;
 
-}
+export const pesquisarVeiculos =
+    service.search;
 
-// ============================================================================
-// ATUALIZAR
-// ============================================================================
+export const contarVeiculos =
+    service.count;
 
-export async function atualizarVeiculo(
-
-    id,
-
-    dados
-
-) {
-
-    return await editar(
-
-        ABA,
-
-        id,
-
-        dados
-
-    );
-
-}
-
-// ============================================================================
-// EXCLUIR
-// ============================================================================
-
-export async function excluirVeiculo(id) {
-
-    return await excluir(
-
-        ABA,
-
-        id
-
-    );
-
-}
+export const existeVeiculo =
+    service.exists;
