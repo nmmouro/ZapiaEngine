@@ -89,6 +89,6 @@ export function createDataSource({
 
     find(id) {
         return this.get(id);
-    },
+    }
 
 }
