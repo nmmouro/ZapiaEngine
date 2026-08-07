@@ -2,6 +2,7 @@
 // DATASOURCE ENGINE
 // Painel Frota
 // Arquivo: js/engine/datasource.js
+// Responsável pelo gerenciamento dos dados.
 // ============================================================================
 
 import {
@@ -11,7 +12,7 @@ import {
 } from "./engine.js";
 
 // ============================================================================
-// DATASOURCE
+// CREATE
 // ============================================================================
 
 export function createDataSource({
@@ -28,65 +29,372 @@ export function createDataSource({
 
 } = {}) {
 
+    if (!service) {
+
+        throw new Error(
+
+            `Datasource '${entity}' sem service.`
+
+        );
+
+    }
+
     const state = {
 
-        id:
+        id: uuid(),
 
-            uuid(),
+        entity,
 
-        data: [],
+        service,
+
+        cache,
+
+        loading: false,
+
+        page: 1,
+
+        pageSize,
+
+        total: 0,
 
         filter: {},
 
         sort: null,
 
-        page: 1,
+        data: [],
 
-        total: 0,
-
-        loading: false,
-
-        pageSize,
-
-        listeners:
-
-            new Set()
+        listeners: new Set()
 
     };
 
-   const datasource = {
+    const datasource = {
 
-    // Nova API
+        entity,
 
-    list: () => load(state, service),
+        //------------------------------------------------------------
+        // CRUD
+        //------------------------------------------------------------
 
-    get: id => find(state, id),
+        list,
 
-    create: registro => save(state, service, registro),
+        get,
 
-    update: (id, registro) =>
-        update(state, service, id, registro),
+        create,
 
-    remove: id =>
-        remove(state, service, id),
+        update,
 
-    refresh: () =>
-        load(state, service, true),
+        remove,
 
-    // Compatibilidade
+        refresh,
 
-    load() {
-        return this.list();
-    },
+        //------------------------------------------------------------
+        // Estado
+        //------------------------------------------------------------
 
-    reload() {
-        return this.refresh();
-    },
+        getData,
 
-    save(registro) {
-        return this.create(registro);
-    },
+        getState,
 
-    find(id) {
-        return this.get(id);
+        clear,
+
+        //------------------------------------------------------------
+        // Configuração
+        //------------------------------------------------------------
+
+        setFilter,
+
+        getFilter,
+
+        setSort,
+
+        getSort,
+
+        setPage,
+
+        getPage,
+
+        //------------------------------------------------------------
+        // Eventos
+        //------------------------------------------------------------
+
+        subscribe,
+
+        unsubscribe
+
+    };
+
+    if (autoLoad) {
+
+        datasource.list();
+
     }
+
+    return datasource;
+
+    //=================================================================
+    // LIST
+    //=================================================================
+
+    async function list() {
+
+        state.loading = true;
+
+        notify();
+
+        const resposta =
+
+            await service.list({
+
+                filter: state.filter,
+
+                sort: state.sort,
+
+                page: state.page,
+
+                pageSize: state.pageSize
+
+            });
+
+        state.data =
+
+            resposta?.data ??
+
+            resposta?.dados ??
+
+            [];
+
+        state.total =
+
+            resposta?.total ??
+
+            state.data.length;
+
+        state.loading = false;
+
+        notify();
+
+        return state.data;
+
+    }
+
+    //=================================================================
+    // REFRESH
+    //=================================================================
+
+    async function refresh() {
+
+        return list();
+
+    }
+
+    //=================================================================
+    // GET
+    //=================================================================
+
+    async function get(id) {
+
+        if (!id) {
+
+            return null;
+
+        }
+
+        const local =
+
+            state.data.find(
+
+                item => item.ID == id
+
+            );
+
+        if (local) {
+
+            return local;
+
+        }
+
+        return service.get(id);
+
+    }
+
+    //=================================================================
+    // CREATE
+    //=================================================================
+
+    async function create(registro) {
+
+        const novo =
+
+            await service.create(
+
+                registro
+
+            );
+
+        await refresh();
+
+        return novo;
+
+    }
+
+    //=================================================================
+    // UPDATE
+    //=================================================================
+
+    async function update(
+
+        id,
+
+        registro
+
+    ) {
+
+        const atualizado =
+
+            await service.update(
+
+                id,
+
+                registro
+
+            );
+
+        await refresh();
+
+        return atualizado;
+
+    }
+
+    //=================================================================
+    // REMOVE
+    //=================================================================
+
+    async function remove(id) {
+
+        await service.remove(id);
+
+        await refresh();
+
+    }
+
+    //=================================================================
+    // FILTER
+    //=================================================================
+
+    function setFilter(filtro = {}) {
+
+        state.filter = filtro;
+
+    }
+
+    function getFilter() {
+
+        return state.filter;
+
+    }
+
+    //=================================================================
+    // SORT
+    //=================================================================
+
+    function setSort(
+
+        field,
+
+        order = "asc"
+
+    ) {
+
+        state.sort = {
+
+            field,
+
+            order
+
+        };
+
+    }
+
+    function getSort() {
+
+        return state.sort;
+
+    }
+
+    //=================================================================
+    // PAGE
+    //=================================================================
+
+    function setPage(page = 1) {
+
+        state.page = page;
+
+    }
+
+    function getPage() {
+
+        return state.page;
+
+    }
+
+    //=================================================================
+    // DATA
+    //=================================================================
+
+    function getData() {
+
+        return state.data;
+
+    }
+
+    function getState() {
+
+        return state;
+
+    }
+
+    function clear() {
+
+        state.data = [];
+
+        notify();
+
+    }
+
+    //=================================================================
+    // OBSERVERS
+    //=================================================================
+
+    function subscribe(listener) {
+
+        state.listeners.add(
+
+            listener
+
+        );
+
+    }
+
+    function unsubscribe(listener) {
+
+        state.listeners.delete(
+
+            listener
+
+        );
+
+    }
+
+    function notify() {
+
+        state.listeners.forEach(
+
+            listener =>
+
+                listener(state)
+
+        );
+
+    }
+
+}
