@@ -1,108 +1,62 @@
 // ============================================================================
-// EMPREGADOS SERVICE
+// VEÍCULOS SERVICE
 // Painel Frota
-// Arquivo: js/services/empregados.js
-// Responsável pela comunicação com a API de Empregados.
+// Arquivo: js/services/veiculos.js
+// Responsável pelos serviços da entidade VEÍCULOS.
 // ============================================================================
 
 import {
 
-    listar,
-    buscar,
-    salvar,
-    editar,
-    excluir
+    createCrudService
 
-} from "../api/api.js";
+} from "./crudService.js";
 
 // ============================================================================
-// CONSTANTES
+// CONFIGURAÇÃO
 // ============================================================================
 
-const ABA = "EMPREGADOS";
+const ENTITY = "EMPREGADOS";
 
 // ============================================================================
-// LISTAR
+// SERVICE
 // ============================================================================
 
-export function obterEmpregados() {
+const service = createCrudService({
 
-    return listar(
+    entity: ENTITY
 
-        ABA
-
-    );
-
-}
+});
 
 // ============================================================================
-// BUSCAR
+// EXPORTAÇÃO
 // ============================================================================
 
-export function obterEmpregado(id) {
-
-    return buscar(
-
-        ABA,
-
-        id
-
-    );
-
-}
+export default service;
 
 // ============================================================================
-// SALVAR
+// COMPATIBILIDADE
 // ============================================================================
 
-export function salvarEmpregado(dados) {
+export const listarVeiculos =
+    service.list;
 
-    return salvar(
+export const obterVeiculo =
+    service.get;
 
-        ABA,
+export const salvarVeiculo =
+    service.create;
 
-        dados
+export const atualizarVeiculo =
+    service.update;
 
-    );
+export const excluirVeiculo =
+    service.remove;
 
-}
+export const pesquisarVeiculos =
+    service.search;
 
-// ============================================================================
-// ATUALIZAR
-// ============================================================================
+export const contarVeiculos =
+    service.count;
 
-export function atualizarEmpregado(
-
-    id,
-
-    dados
-
-) {
-
-    return editar(
-
-        ABA,
-
-        id,
-
-        dados
-
-    );
-
-}
-
-// ============================================================================
-// EXCLUIR
-// ============================================================================
-
-export function excluirEmpregado(id) {
-
-    return excluir(
-
-        ABA,
-
-        id
-
-    );
-
-}
+export const existeVeiculo =
+    service.exists;
