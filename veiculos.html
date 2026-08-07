@@ -2,293 +2,110 @@
 <html lang="pt-BR">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Veículos - Painel Frota</title>
+    <meta 
+        name="viewport" 
+        content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="./css/global.css">
-    <link rel="stylesheet" href="./css/veiculos.css">
+
+    <title>
+        Veículos - Painel Frota
+    </title>
+
+
+    <link 
+        rel="stylesheet" 
+        href="./css/global.css">
+
+
+    <link 
+        rel="stylesheet" 
+        href="./css/veiculos.css">
+
+
 </head>
+
 
 <body>
 
+
 <header class="cabecalho">
 
-    <h1>Painel Frota</h1>
+    <h1>
+        Painel Frota
+    </h1>
+
 
     <nav>
-        <a href="index.html">Início</a>
-        <a href="veiculos.html" class="ativo">Veículos</a>
-        <a href="empregados.html">Empregados</a>
-        <a href="lancamentos.html">Lançamentos</a>
+
+        <a href="index.html">
+            Início
+        </a>
+
+
+        <a href="veiculos.html"
+           class="ativo">
+
+            Veículos
+
+        </a>
+
+
+        <a href="empregados.html">
+            Empregados
+        </a>
+
+
+        <a href="lancamentos.html">
+            Lançamentos
+        </a>
+
+
     </nav>
 
+
 </header>
+
+
+
 
 
 <main class="container">
 
 
-    <section class="cabecalho-pagina">
+    <section 
+        id="app"
+        data-module="VEICULOS">
 
-        <h2>Cadastro de Veículos</h2>
 
-        <button 
-            id="btnNovo"
-            type="button">
-            Novo Veículo
-        </button>
+        <!-- ENGINE IRÁ MONTAR A INTERFACE -->
 
-    </section>
 
+        <div class="loading">
 
+            Carregando veículos...
 
-    <section class="card formulario">
-
-
-        <h3 id="tituloFormulario">
-            Novo Veículo
-        </h3>
-
-
-        <form id="formVeiculo">
-
-
-            <input 
-                type="hidden"
-                id="id">
-
-
-
-            <div class="campo">
-
-                <label for="placa">
-                    Placa
-                </label>
-
-                <input
-                    id="placa"
-                    name="Placa"
-                    type="text"
-                    maxlength="8"
-                    required>
-
-            </div>
-
-
-
-            <div class="campo">
-
-                <label for="modelo">
-                    Modelo
-                </label>
-
-                <input
-                    id="modelo"
-                    name="Modelo"
-                    type="text"
-                    required>
-
-            </div>
-
-
-
-            <div class="campo">
-
-                <label for="marca">
-                    Marca
-                </label>
-
-                <input
-                    id="marca"
-                    name="Marca"
-                    type="text">
-
-            </div>
-
-
-
-            <div class="campo">
-
-                <label for="ano">
-                    Ano
-                </label>
-
-                <input
-                    id="ano"
-                    name="Ano"
-                    type="number">
-
-            </div>
-
-
-
-            <div class="campo">
-
-                <label for="combustivel">
-                    Combustível
-                </label>
-
-                <select id="combustivel"
-                        name="Combustível">
-
-                    <option value="">
-                        Selecione
-                    </option>
-
-                    <option value="GASOLINA">
-                        GASOLINA
-                    </option>
-
-                    <option value="ETANOL">
-                        ETANOL
-                    </option>
-
-                    <option value="DIESEL">
-                        DIESEL
-                    </option>
-
-                    <option value="FLEX">
-                        FLEX
-                    </option>
-
-                </select>
-
-            </div>
-
-
-
-            <div class="campo">
-
-                <label for="status">
-                    Status
-                </label>
-
-                <select 
-                    id="status"
-                    name="Status">
-
-                    <option value="ATIVO">
-                        ATIVO
-                    </option>
-
-                    <option value="INATIVO">
-                        INATIVO
-                    </option>
-
-                </select>
-
-            </div>
-
-
-
-            <div class="acoes">
-
-                <button 
-                    type="submit">
-                    Salvar
-                </button>
-
-
-                <button 
-                    id="btnCancelar"
-                    type="button">
-
-                    Cancelar
-
-                </button>
-
-            </div>
-
-
-
-        </form>
+        </div>
 
 
     </section>
 
-
-
-
-
-    <section class="card">
-
-
-        <h3>
-            Veículos Cadastrados
-        </h3>
-
-
-
-        <table 
-            id="tabelaVeiculos">
-
-
-            <thead>
-
-                <tr>
-
-                    <th>
-                        Placa
-                    </th>
-
-                    <th>
-                        Modelo
-                    </th>
-
-                    <th>
-                        Marca
-                    </th>
-
-                    <th>
-                        Ano
-                    </th>
-
-                    <th>
-                        Combustível
-                    </th>
-
-                    <th>
-                        Status
-                    </th>
-
-                    <th>
-                        Ações
-                    </th>
-
-                </tr>
-
-            </thead>
-
-
-            <tbody>
-
-                <!-- preenchido pelo JS -->
-
-            </tbody>
-
-
-        </table>
-
-
-    </section>
 
 
 </main>
 
 
 
-<div id="loading"
-     class="loading oculto">
-
-    Carregando...
-
-</div>
 
 
+<script 
+    type="module"
+    src="./js/pages/veiculos.js">
 
-<script type="module" src="./js/pages/veiculos.js"></script>
+</script>
+
 
 
 </body>
