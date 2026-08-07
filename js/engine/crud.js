@@ -41,15 +41,11 @@ export function createCrud({
 
     const state =
 
-        createState({
+    createState({
 
-            registros: [],
+        entity
 
-            filtrados: [],
-
-            editando: null
-
-        });
+    });
 
     // ------------------------------------------------------------
     // CARREGAR
