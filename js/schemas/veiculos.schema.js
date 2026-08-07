@@ -41,6 +41,8 @@ createSchema({
 
         "ID",
 
+    service,
+
     defaultSort: {
 
         field:
