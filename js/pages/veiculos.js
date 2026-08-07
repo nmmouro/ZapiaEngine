@@ -40,7 +40,9 @@ document.addEventListener(
 
 
             container: "#app",
+            
 
+                                                        state:"VEICULOS"
 
 
             options: {
