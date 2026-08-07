@@ -4,46 +4,84 @@
 // Arquivo: js/pages/veiculos.js
 // ============================================================================
 
-import {
+/**
+ * Página VEÍCULOS
+ * 
+ * Responsabilidade:
+ * Apenas inicializar o módulo Engine.
+ * 
+ * Regras:
+ * - Não manipular DOM diretamente.
+ * - Não fazer fetch/API.
+ * - Não controlar formulário.
+ * - Não conhecer colunas da planilha.
+ */
 
-    createModule
 
-} from "../engine/module.js";
+import { createModule } from "../engine/module.js";
 
-import {
+import { SCHEMA_VEICULOS } from "../schemas/veiculos.schema.js";
 
-    SCHEMA_VEICULOS
 
-} from "../schemas/veiculos.schema.js";
-
-import {
-
-    COLUNAS_VEICULOS
-
-} from "../config/tabelas/veiculos.js";
 
 document.addEventListener(
-
+    
     "DOMContentLoaded",
 
-    () =>
+    async () => {
 
-        createModule({
+
+        await createModule({
 
             entity: "VEICULOS",
 
+
             schema: SCHEMA_VEICULOS,
 
-            columns: COLUNAS_VEICULOS,
 
-            form: "#formVeiculo",
+            container: "#app",
 
-            table: "#tabelaVeiculos",
 
-            filter: "#filtroVeiculos",
 
-            permissions: "veiculos"
+            options: {
 
-        })
+
+                /**
+                 * Configurações opcionais
+                 * específicas da entidade
+                 */
+
+
+                titulo:
+                    "Cadastro de Veículos",
+
+
+
+                tabela:
+                    "Veículos Cadastrados",
+
+
+
+                permitirNovo:
+                    true,
+
+
+
+                permitirEditar:
+                    true,
+
+
+
+                permitirExcluir:
+                    true
+
+
+            }
+
+
+        });
+
+
+    }
 
 );
