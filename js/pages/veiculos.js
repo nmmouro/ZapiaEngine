@@ -1,100 +1,27 @@
-// ============================================================================
-// VEÍCULOS
-// Painel Frota
-// Arquivo: js/pages/veiculos.js
-// ============================================================================
+import {
 
-/**
- * Página VEÍCULOS
- *
- * Responsabilidade:
- * Apenas inicializar o módulo Engine.
- *
- * Regras:
- * - Não manipular DOM diretamente.
- * - Não fazer fetch/API.
- * - Não controlar formulário.
- * - Não conhecer colunas da planilha.
- */
+    createModule
 
+} from "../engine/module.js";
 
-import { createModule } from "../engine/module.js";
+import {
 
-import { SCHEMA_VEICULOS } 
-from "../schemas/veiculos.schema.js";
+    SCHEMA_VEICULOS
 
-
+} from "../schemas/veiculos.schema.js";
 
 document.addEventListener(
 
     "DOMContentLoaded",
 
-    async () => {
+    () =>
 
+        createModule({
 
-        await createModule({
+            schema:
 
+                SCHEMA_VEICULOS
 
-            entity: "VEICULOS",
-
-
-
-            schema: SCHEMA_VEICULOS,
-
-
-
-            container: "#app",
-
-
-
-            stateName: "veiculos",
-
-
-
-            options: {
-
-
-                /**
-                 * Configurações opcionais
-                 * específicas da entidade
-                 */
-
-
-                titulo:
-
-                    "Cadastro de Veículos",
-
-
-
-                tabela:
-
-                    "Veículos Cadastrados",
-
-
-
-                permitirNovo:
-
-                    true,
-
-
-
-                permitirEditar:
-
-                    true,
-
-
-
-                permitirExcluir:
-
-                    true
-
-
-            }
-
-
-        });
-
-
-    }
+        })
 
 );
