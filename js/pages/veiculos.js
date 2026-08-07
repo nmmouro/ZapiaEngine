@@ -6,10 +6,10 @@
 
 /**
  * Página VEÍCULOS
- * 
+ *
  * Responsabilidade:
  * Apenas inicializar o módulo Engine.
- * 
+ *
  * Regras:
  * - Não manipular DOM diretamente.
  * - Não fazer fetch/API.
@@ -20,12 +20,13 @@
 
 import { createModule } from "../engine/module.js";
 
-import { SCHEMA_VEICULOS } from "../schemas/veiculos.schema.js";
+import { SCHEMA_VEICULOS } 
+from "../schemas/veiculos.schema.js";
 
 
 
 document.addEventListener(
-    
+
     "DOMContentLoaded",
 
     async () => {
@@ -33,16 +34,21 @@ document.addEventListener(
 
         await createModule({
 
+
             entity: "VEICULOS",
+
 
 
             schema: SCHEMA_VEICULOS,
 
 
-            container: "#app",
-            
 
-                                                      stateName:"veiculos"
+            container: "#app",
+
+
+
+            stateName: "veiculos",
+
 
 
             options: {
@@ -55,26 +61,31 @@ document.addEventListener(
 
 
                 titulo:
+
                     "Cadastro de Veículos",
 
 
 
                 tabela:
+
                     "Veículos Cadastrados",
 
 
 
                 permitirNovo:
+
                     true,
 
 
 
                 permitirEditar:
+
                     true,
 
 
 
                 permitirExcluir:
+
                     true
 
 
