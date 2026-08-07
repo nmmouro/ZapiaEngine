@@ -9,7 +9,7 @@ import {
 
     API_URL
 
-} from "../config/api.js";
+} from "../config/config.js";
 
 // ============================================================================
 // FACTORY
