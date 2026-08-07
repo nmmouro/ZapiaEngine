@@ -42,7 +42,7 @@ document.addEventListener(
             container: "#app",
             
 
-                                                        state:"VEICULOS"
+                                                      stateName:"veiculos"
 
 
             options: {
