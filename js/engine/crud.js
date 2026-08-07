@@ -35,11 +35,29 @@ export function createCrud({
 
     table,
 
-    filter = null
+    filter = null,
 
     state
 
 }) {
+
+    
+    if (!state) {
+
+        throw new Error(
+            `CRUD '${entity}' sem state.`
+        );
+
+    }
+
+
+    if (!datasource) {
+
+        throw new Error(
+            `CRUD '${entity}' sem datasource.`
+        );
+
+    }
 
    
 
