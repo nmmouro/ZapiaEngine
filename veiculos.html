@@ -1,333 +1,295 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <title>Veículos - Painel Frota</title>
 
-    <title>Painel Frota - Veículos</title>
-
-    <link
-        rel="stylesheet"
-        href="css/style.css">
-
-    <link
-        rel="stylesheet"
-        href="css/table.css">
-
-    <link
-        rel="stylesheet"
-        href="css/forms.css">
-
-    <link
-        rel="stylesheet"
-        href="css/loading.css">
-
+    <link rel="stylesheet" href="./css/global.css">
+    <link rel="stylesheet" href="./css/veiculos.css">
 </head>
 
 <body>
 
-    <!-- =============================================================== -->
-    <!-- CABEÇALHO -->
-    <!-- =============================================================== -->
+<header class="cabecalho">
 
- <header class="header">
+    <h1>Painel Frota</h1>
 
-          <div class="header-logo">
-              
-            <img src="assets/img/logo.png" alt="Logo Frota">
-              
-            </div>
+    <nav>
+        <a href="index.html">Início</a>
+        <a href="veiculos.html" class="ativo">Veículos</a>
+        <a href="empregados.html">Empregados</a>
+        <a href="lancamentos.html">Lançamentos</a>
+    </nav>
 
-            <div class="header-title">
-                
-                        <h1> VEÍCULOS </h1>
-                
-            </div>
-
-            <div class="header-info">
-                    
-            <div id="clock"
-
-            class="clock"  aria-label="Relógio">
-
-            </div>
-
-            <button
-
-            id="btnFullscreen"
-
-            class="btn-icon"  aria-label="Tela cheia">
-
-                        ⛶
-
-            </button>
-
-            </div>
-
-     
 </header>
 
-    <main class="container">
 
-        <!-- =========================================================== -->
-        <!-- FORMULÁRIO -->
-        <!-- =========================================================== -->
+<main class="container">
 
-        <section class="card">
 
-            <h2 id="tituloFormulario">
+    <section class="cabecalho-pagina">
 
-                Novo veículo
+        <h2>Cadastro de Veículos</h2>
 
-            </h2>
+        <button 
+            id="btnNovo"
+            type="button">
+            Novo Veículo
+        </button>
 
-            <form id="formVeiculo">
+    </section>
 
-                <div class="grid">
 
-                    <div class="field">
 
-                        <label for="data">
+    <section class="card formulario">
 
-                            Data
 
-                        </label>
+        <h3 id="tituloFormulario">
+            Novo Veículo
+        </h3>
 
-                        <input
-                            type="date"
-                            id="data"
-                            required>
 
-                    </div>
+        <form id="formVeiculo">
 
-                    <div class="field">
 
-                        <label for="placa">
+            <input 
+                type="hidden"
+                id="id">
 
-                            Placa
 
-                        </label>
 
-                        <input
-                            type="text"
-                            id="placa"
-                            maxlength="8"
-                            required>
+            <div class="campo">
 
-                    </div>
+                <label for="placa">
+                    Placa
+                </label>
 
-                    <div class="field">
-
-                        <label for="modelo">
-
-                            Modelo
-
-                        </label>
-
-                        <input
-                            type="text"
-                            id="modelo"
-                            required>
-
-                    </div>
-
-                    <div class="field">
-
-                        <label for="marca">
-
-                            Marca
-
-                        </label>
-
-                        <input
-                            type="text"
-                            id="marca"
-                            required>
-
-                    </div>
-
-                    <div class="field">
-
-                        <label for="ano">
-
-                            Ano
-
-                        </label>
-
-                        <input
-                            type="number"
-                            id="ano"
-                            min="1900"
-                            max="2100">
-
-                    </div>
-
-                    <div class="field">
-
-                        <label for="combustivel">
-
-                            Combustível
-
-                        </label>
-
-                        <select
-                            id="combustivel">
-
-                            <option value="">
-
-                                Selecione
-
-                            </option>
-
-                            <option value="GASOLINA">
-
-                                GASOLINA
-
-                            </option>
-
-                            <option value="ETANOL">
-
-                                ETANOL
-
-                            </option>
-
-                            <option value="FLEX">
-
-                                FLEX
-
-                            </option>
-
-                            <option value="DIESEL">
-
-                                DIESEL
-
-                            </option>
-
-                            <option value="ELÉTRICO">
-
-                                ELÉTRICO
-
-                            </option>
-
-                            <option value="HÍBRIDO">
-
-                                HÍBRIDO
-
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                    <div class="field">
-
-                        <label for="km">
-
-                            KM
-
-                        </label>
-
-                        <input
-                            type="number"
-                            id="km"
-                            min="0">
-
-                    </div>
-
-                    <div class="field">
-
-                        <label for="status">
-
-                            Status
-
-                        </label>
-
-                        <select
-                            id="status">
-
-                            <option value="ATIVO">
-
-                                ATIVO
-
-                            </option>
-
-                            <option value="MANUTENÇÃO">
-
-                                MANUTENÇÃO
-
-                            </option>
-
-                            <option value="INATIVO">
-
-                                INATIVO
-
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                </div>
-
-                <div class="buttons">
-
-                    <button
-                        type="submit"
-                        class="btn btn-primary">
-
-                        Salvar
-
-                    </button>
-
-                    <button
-                        type="button"
-                        id="btnNovo"
-                        class="btn">
-
-                        Novo
-
-                    </button>
-
-                </div>
-
-            </form>
-
-        </section>
-
-        <!-- =========================================================== -->
-        <!-- TABELA -->
-        <!-- =========================================================== -->
-
-        <section class="card">
-
-            <h2>
-
-                Veículos cadastrados
-
-            </h2>
-
-            <div id="tabelaVeiculos">
+                <input
+                    id="placa"
+                    name="Placa"
+                    type="text"
+                    maxlength="8"
+                    required>
 
             </div>
 
-        </section>
 
-    </main>
 
-    <!-- =============================================================== -->
-    <!-- SCRIPT -->
-    <!-- =============================================================== -->
+            <div class="campo">
 
-    <script
-        type="module"
-        src="js/pages/veiculos.js">
-    </script>
+                <label for="modelo">
+                    Modelo
+                </label>
+
+                <input
+                    id="modelo"
+                    name="Modelo"
+                    type="text"
+                    required>
+
+            </div>
+
+
+
+            <div class="campo">
+
+                <label for="marca">
+                    Marca
+                </label>
+
+                <input
+                    id="marca"
+                    name="Marca"
+                    type="text">
+
+            </div>
+
+
+
+            <div class="campo">
+
+                <label for="ano">
+                    Ano
+                </label>
+
+                <input
+                    id="ano"
+                    name="Ano"
+                    type="number">
+
+            </div>
+
+
+
+            <div class="campo">
+
+                <label for="combustivel">
+                    Combustível
+                </label>
+
+                <select id="combustivel"
+                        name="Combustível">
+
+                    <option value="">
+                        Selecione
+                    </option>
+
+                    <option value="GASOLINA">
+                        GASOLINA
+                    </option>
+
+                    <option value="ETANOL">
+                        ETANOL
+                    </option>
+
+                    <option value="DIESEL">
+                        DIESEL
+                    </option>
+
+                    <option value="FLEX">
+                        FLEX
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <div class="campo">
+
+                <label for="status">
+                    Status
+                </label>
+
+                <select 
+                    id="status"
+                    name="Status">
+
+                    <option value="ATIVO">
+                        ATIVO
+                    </option>
+
+                    <option value="INATIVO">
+                        INATIVO
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <div class="acoes">
+
+                <button 
+                    type="submit">
+                    Salvar
+                </button>
+
+
+                <button 
+                    id="btnCancelar"
+                    type="button">
+
+                    Cancelar
+
+                </button>
+
+            </div>
+
+
+
+        </form>
+
+
+    </section>
+
+
+
+
+
+    <section class="card">
+
+
+        <h3>
+            Veículos Cadastrados
+        </h3>
+
+
+
+        <table 
+            id="tabelaVeiculos">
+
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Placa
+                    </th>
+
+                    <th>
+                        Modelo
+                    </th>
+
+                    <th>
+                        Marca
+                    </th>
+
+                    <th>
+                        Ano
+                    </th>
+
+                    <th>
+                        Combustível
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Ações
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                <!-- preenchido pelo JS -->
+
+            </tbody>
+
+
+        </table>
+
+
+    </section>
+
+
+</main>
+
+
+
+<div id="loading"
+     class="loading oculto">
+
+    Carregando...
+
+</div>
+
+
+
+<script type="module" src="./js/pages/veiculos.js"></script>
+
 
 </body>
 
