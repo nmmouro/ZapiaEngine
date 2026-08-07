@@ -16,7 +16,11 @@ import {
 
 export function createDataSource({
 
+    entity,
+
     service,
+
+    cache = true,
 
     autoLoad = false,
 
@@ -50,207 +54,45 @@ export function createDataSource({
 
     };
 
-    const datasource = {
+   const datasource = {
 
-        load:
+    // Nova API
 
-            () =>
+    list: () => load(state, service),
 
-                load(
+    get: id => find(state, id),
 
-                    state,
+    create: registro => save(state, service, registro),
 
-                    service
+    update: (id, registro) =>
+        update(state, service, id, registro),
 
-                ),
+    remove: id =>
+        remove(state, service, id),
 
-        reload:
+    refresh: () =>
+        load(state, service, true),
 
-            () =>
+    // Compatibilidade
 
-                load(
+    load() {
+        return this.list();
+    },
 
-                    state,
+    reload() {
+        return this.refresh();
+    },
 
-                    service,
+    save(registro) {
+        return this.create(registro);
+    },
 
-                    true
+    find(id) {
+        return this.get(id);
+    },
 
-                ),
-
-        save:
-
-            registro =>
-
-                save(
-
-                    state,
-
-                    service,
-
-                    registro
-
-                ),
-
-        update:
-
-            (id, registro) =>
-
-                update(
-
-                    state,
-
-                    service,
-
-                    id,
-
-                    registro
-
-                ),
-
-        remove:
-
-            id =>
-
-                remove(
-
-                    state,
-
-                    service,
-
-                    id
-
-                ),
-
-        find:
-
-            id =>
-
-                find(
-
-                    state,
-
-                    id
-
-                ),
-
-        clear:
-
-            () =>
-
-                clear(
-
-                    state
-
-                ),
-
-        destroy:
-
-            () =>
-
-                destroy(
-
-                    state
-
-                ),
-
-        setFilter:
-
-            filtro =>
-
-                setFilter(
-
-                    state,
-
-                    filtro
-
-                ),
-
-        setSort:
-
-            (campo, ordem) =>
-
-                setSort(
-
-                    state,
-
-                    campo,
-
-                    ordem
-
-                ),
-
-        setPage:
-
-            pagina =>
-
-                setPage(
-
-                    state,
-
-                    pagina
-
-                ),
-
-        getData:
-
-            () =>
-
-                state.data,
-
-        getRecord:
-
-            id =>
-
-                find(
-
-                    state,
-
-                    id
-
-                ),
-
-        getState:
-
-            () =>
-
-                state,
-
-        subscribe:
-
-            callback =>
-
-                state.listeners.add(
-
-                    callback
-
-                ),
-
-        unsubscribe:
-
-            callback =>
-
-                state.listeners.delete(
-
-                    callback
-
-                )
-
-    };
-
-    if (
-
-        autoLoad
-
-    ) {
-
-        datasource.load();
-
-    }
-
-    return datasource;
-
-}
+    ...
+};
 
 
 /*
