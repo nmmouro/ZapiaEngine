@@ -1,108 +1,62 @@
 // ============================================================================
-// LANÇAMENTOS SERVICE
+// VEÍCULOS SERVICE
 // Painel Frota
-// Arquivo: js/services/lancamentos.js
-// Responsável pela comunicação com a API de Lançamentos
+// Arquivo: js/services/veiculos.js
+// Responsável pelos serviços da entidade VEÍCULOS.
 // ============================================================================
 
 import {
 
-    listar,
-    buscar,
-    salvar,
-    editar,
-    excluir
+    createCrudService
 
-} from "../api/api.js";
+} from "./crudService.js";
 
 // ============================================================================
-// CONSTANTES
+// CONFIGURAÇÃO
 // ============================================================================
 
-const ABA = "LANCAMENTOS";
+const ENTITY = "LANCAMENTOS";
 
 // ============================================================================
-// LISTAR
+// SERVICE
 // ============================================================================
 
-export function obterLancamentos() {
+const service = createCrudService({
 
-    return listar(
+    entity: ENTITY
 
-        ABA
-
-    );
-
-}
+});
 
 // ============================================================================
-// BUSCAR
+// EXPORTAÇÃO
 // ============================================================================
 
-export function obterLancamento(id) {
-
-    return buscar(
-
-        ABA,
-
-        id
-
-    );
-
-}
+export default service;
 
 // ============================================================================
-// SALVAR
+// COMPATIBILIDADE
 // ============================================================================
 
-export function salvarLancamento(dados) {
+export const listarVeiculos =
+    service.list;
 
-    return salvar(
+export const obterVeiculo =
+    service.get;
 
-        ABA,
+export const salvarVeiculo =
+    service.create;
 
-        dados
+export const atualizarVeiculo =
+    service.update;
 
-    );
+export const excluirVeiculo =
+    service.remove;
 
-}
+export const pesquisarVeiculos =
+    service.search;
 
-// ============================================================================
-// EDITAR
-// ============================================================================
+export const contarVeiculos =
+    service.count;
 
-export function atualizarLancamento(
-
-    id,
-
-    dados
-
-) {
-
-    return editar(
-
-        ABA,
-
-        id,
-
-        dados
-
-    );
-
-}
-
-// ============================================================================
-// EXCLUIR
-// ============================================================================
-
-export function excluirLancamento(id) {
-
-    return excluir(
-
-        ABA,
-
-        id
-
-    );
-
-}
+export const existeVeiculo =
+    service.exists;
