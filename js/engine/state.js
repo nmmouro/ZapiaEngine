@@ -23,68 +23,42 @@ const stores =
 // CRIAR ESTADO
 // ============================================================================
 
-export function createState({
+export function createState(config = {}){
 
-    name,
 
-    state = {}
+    const name =
+        config.name;
 
-} = {}) {
 
-    if (!name) {
+    if(!name){
 
         throw new Error(
-
             "Nome do estado não informado."
-
         );
 
     }
 
-    if (
 
-        stores.has(name)
-
-    ) {
-
-        return stores.get(name);
-
-    }
-
-    const store = {
-
-        id:
-
-            uuid(),
+    return {
 
         name,
 
-        data:
+        entity:
+            config.entity,
 
-            structuredClone(
 
-                state
+        data:[],
 
-            ),
+        selected:null,
 
-        listeners:
+        editing:null,
 
-            new Set()
+        loading:false
 
     };
 
-    stores.set(
-
-        name,
-
-        store
-
-    );
-
-    return store;
 
 }
-
 // ============================================================================
 // OBTER ESTADO
 // ============================================================================
