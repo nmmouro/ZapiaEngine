@@ -91,35 +91,34 @@ export async function createModule({
 
 } = {}) {
 
+
     if (!schema) {
 
         throw new Error(
-
             "Schema não informado."
-
         );
 
     }
 
-    const entity =
 
+    const entity =
         schema.entity;
 
+
+    if (!entity) {
+
+        throw new Error(
+            "Entidade não informada no schema."
+        );
+
+    }
+
+
     if (
-
-        modules.has(
-
-            entity
-
-        )
-
+        modules.has(entity)
     ) {
 
-        return modules.get(
-
-            entity
-
-        );
+        return modules.get(entity);
 
     }
 
@@ -197,14 +196,14 @@ export async function createModule({
     // STATE
     // ========================================================================
 
-    const state =
+    const state = createState({
 
-        createState({
+    name:
+        entity.toLowerCase(),
 
-                                 name: config.stateName,
-            entity
+    entity
 
-        });
+});
 
     // ========================================================================
     // DATASOURCE
