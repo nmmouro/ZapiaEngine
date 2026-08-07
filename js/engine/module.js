@@ -113,13 +113,7 @@ export function createModule({
 
     const state =
 
-        createState({
-
-        name:
-
-            options.stateName ??
-
-            entity.toLowerCase(),
+    createState({
 
         entity
 
