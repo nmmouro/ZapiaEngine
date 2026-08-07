@@ -1,0 +1,30 @@
+* {
+
+    box-sizing: border-box;
+
+}
+
+
+body {
+
+    margin:0;
+
+    font-family: Arial, sans-serif;
+
+}
+
+
+.container {
+
+    padding:20px;
+
+}
+
+
+.loading {
+
+    text-align:center;
+
+    padding:30px;
+
+}
