@@ -2,72 +2,48 @@
 // CONFIG
 // Painel Frota
 // Arquivo: js/config/config.js
-// Configurações gerais da aplicação.
 // ============================================================================
 
-export const CONFIG = Object.freeze({
+export const CONFIG = {
 
-    // ========================================================================
-    // API
-    // ========================================================================
+    api: {
 
-    API_URL:
-        "https://script.google.com/macros/s/AKfycbyYrCSly4wRdpArT3MXFVm0CYfjPuOCosyIonImyHDuubGMeHznUE8pRIeJisy6f4nIFQ/exec",
+        url:
 
-    // ========================================================================
-    // APLICAÇÃO
-    // ========================================================================
+            "https://script.google.com/macros/s/AKfycbyYrCSly4wRdpArT3MXFVm0CYfjPuOCosyIonImyHDuubGMeHznUE8pRIeJisy6f4nIFQ/exec",
 
-    APP_NAME:
-        "Painel Frota",
+        timeout:
 
-    APP_VERSION:
-        "1.0.0",
+            30000
 
-    // ========================================================================
-    // TABELAS
-    // ========================================================================
+    },
 
-    PAGE_SIZE:
-        20,
+    engine: {
 
-    // ========================================================================
-    // DATAS
-    // ========================================================================
+        autoRefresh:
 
-    LOCALE:
-        "pt-BR",
+            5000,
 
-    TIMEZONE:
-        "America/Sao_Paulo",
+        pageSize:
 
-    // ========================================================================
-    // MENSAGENS
-    // ========================================================================
+            20,
 
-    MESSAGES: {
+        cache:
 
-        SAVE_SUCCESS:
-            "Registro salvo com sucesso.",
+            true
 
-        UPDATE_SUCCESS:
-            "Registro atualizado com sucesso.",
+    },
 
-        DELETE_SUCCESS:
-            "Registro excluído com sucesso.",
+    ui: {
 
-        CONFIRM_DELETE:
-            "Deseja realmente excluir este registro?",
+        animation:
 
-        LOAD_ERROR:
-            "Erro ao carregar dados.",
+            true,
 
-        SAVE_ERROR:
-            "Erro ao salvar registro.",
+        locale:
 
-        API_ERROR:
-            "Erro de comunicação com o servidor."
+            "pt-BR"
 
     }
 
-});
+};
