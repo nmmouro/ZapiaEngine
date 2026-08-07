@@ -4,6 +4,13 @@
 // Arquivo: js/schemas/veiculos.schema.js
 // ============================================================================
 
+
+import service from "../services/veiculos.js";
+
+
+
+
+
 import {
 
     createSchema
