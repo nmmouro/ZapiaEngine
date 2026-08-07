@@ -155,21 +155,26 @@ export function createDataSource({
 
             });
 
-        state.data =
+       state.data =
 
+    Array.isArray(resposta)
+
+        ? resposta
+
+        : (
             resposta?.data ??
-
             resposta?.dados ??
-
-            [];
+            []
+        );
 
         state.total =
 
+    !Array.isArray(resposta)
+        ? (
             resposta?.total ??
-
-            state.data.length;
-
-        state.loading = false;
+            state.data.length
+        )
+        : state.data.length;
 
         notify();
 
