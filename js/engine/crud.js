@@ -37,15 +37,11 @@ export function createCrud({
 
     filter = null
 
+    state
+
 }) {
 
-    const state =
-
-    createState({
-
-        entity
-
-    });
+   
 
     // ------------------------------------------------------------
     // CARREGAR
