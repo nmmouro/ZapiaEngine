@@ -14,14 +14,15 @@ document.addEventListener(
 
     "DOMContentLoaded",
 
-    () =>
+    async () => {
 
-        createModule({
+        await createModule({
 
             schema:
-
                 SCHEMA_VEICULOS
 
-        })
+        });
+
+    }
 
 );
