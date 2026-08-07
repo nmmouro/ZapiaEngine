@@ -201,6 +201,7 @@ export async function createModule({
 
         createState({
 
+                                 name: config.stateName,
             entity
 
         });
