@@ -159,23 +159,27 @@ export function renderTable(
 }
 
 // ============================================================================
-// REFRECH TABELA
+// REFRESH TABELA
 // ============================================================================
 
-refreshTable(container, novosDados);
-
 export function refreshTable(
+
     container,
+
     data
+
 ) {
 
+
     const tabela = tabelas.get(container);
+
 
     if (!tabela) {
 
         return;
 
     }
+
 
     atualizarBody(
 
@@ -192,7 +196,6 @@ export function refreshTable(
     );
 
 }
-
 // ============================================================================
 // UPDATE LINHA
 // ============================================================================
