@@ -11,7 +11,12 @@ import {
 
 } from "../config/config.js";
 
-const API = CONFIG.api;
+const API =
+    CONFIG.api;
+
+
+const API_URL =
+    API.url;
 
 // ============================================================================
 // FACTORY
