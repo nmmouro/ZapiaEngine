@@ -478,15 +478,27 @@ export function enableButton(
 
 ){
 
-    toolbars
+    const toolbar = toolbars.get(container);
 
-        .get(container)
 
-        ?.buttons
+    if(!toolbar){
 
-        .get(id)
+        return;
 
-        .disabled=false;
+    }
+
+
+    const button = toolbar.buttons.get(id);
+
+
+    if(!button){
+
+        return;
+
+    }
+
+
+    button.disabled = false;
 
 }
 
