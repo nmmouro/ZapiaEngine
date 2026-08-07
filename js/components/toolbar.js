@@ -550,15 +550,29 @@ export function showButton(
 
 ){
 
-    toolbars
 
-        .get(container)
+    const toolbar = toolbars.get(container);
 
-        ?.buttons
 
-        .get(id)
+    if(!toolbar){
 
-        .style.display="";
+        return;
+
+    }
+
+
+    const button = toolbar.buttons.get(id);
+
+
+    if(!button){
+
+        return;
+
+    }
+
+
+    button.style.display = "";
+
 
 }
 
@@ -574,15 +588,29 @@ export function hideButton(
 
 ){
 
-    toolbars
 
-        .get(container)
+    const toolbar = toolbars.get(container);
 
-        ?.buttons
 
-        .get(id)
+    if(!toolbar){
 
-        .style.display="none";
+        return;
+
+    }
+
+
+    const button = toolbar.buttons.get(id);
+
+
+    if(!button){
+
+        return;
+
+    }
+
+
+    button.style.display = "none";
+
 
 }
 
