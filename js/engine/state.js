@@ -15,50 +15,74 @@ import {
 // STORE
 // ============================================================================
 
-const stores =
-
-    new Map();
+const stores = new Map();
 
 // ============================================================================
 // CRIAR ESTADO
 // ============================================================================
 
-export function createState(config = {}){
+export function createState({
 
+    entity,
 
-    const name =
-        config.name;
+    name = entity.toLowerCase(),
 
+    initialState = {}
 
-    if(!name){
+}) {
 
-        throw new Error(
-            "Nome do estado não informado."
-        );
+    if (stores.has(name)) {
+
+        return stores.get(name);
 
     }
 
+    const store = {
 
-    return {
+        id:
+
+            uuid(),
 
         name,
 
-        entity:
-            config.entity,
+        entity,
 
+        data: {
 
-        data:[],
+            ...initialState
 
-        selected:null,
+        },
 
-        editing:null,
+        selected:
 
-        loading:false
+            null,
+
+        editing:
+
+            null,
+
+        loading:
+
+            false,
+
+        listeners:
+
+            new Set()
 
     };
 
+    stores.set(
+
+        name,
+
+        store
+
+    );
+
+    return store;
 
 }
+
 // ============================================================================
 // OBTER ESTADO
 // ============================================================================
@@ -69,19 +93,23 @@ export function getState(
 
 ) {
 
-    return stores.get(name);
+    return stores.get(
+
+        name
+
+    );
 
 }
 
 // ============================================================================
-// DEFINIR VALOR
+// DEFINIR OBJETO
 // ============================================================================
 
 export function setState(
 
     name,
 
-    values
+    values = {}
 
 ) {
 
@@ -116,7 +144,7 @@ export function setState(
 }
 
 // ============================================================================
-// LER VALOR
+// RETORNAR OBJETO
 // ============================================================================
 
 export function state(
@@ -134,7 +162,7 @@ export function state(
 }
 
 // ============================================================================
-// GET
+// GET PROPERTY
 // ============================================================================
 
 export function get(
@@ -154,7 +182,7 @@ export function get(
 }
 
 // ============================================================================
-// SET
+// SET PROPERTY
 // ============================================================================
 
 export function set(
@@ -194,6 +222,124 @@ export function set(
 }
 
 // ============================================================================
+// LOADING
+// ============================================================================
+
+export function setLoading(
+
+    name,
+
+    value
+
+) {
+
+    const store =
+
+        getState(
+
+            name
+
+        );
+
+    if (!store) {
+
+        return;
+
+    }
+
+    store.loading =
+
+        Boolean(
+
+            value
+
+        );
+
+    notify(
+
+        store
+
+    );
+
+}
+
+// ============================================================================
+// SELEÇÃO
+// ============================================================================
+
+export function setSelected(
+
+    name,
+
+    registro
+
+) {
+
+    const store =
+
+        getState(
+
+            name
+
+        );
+
+    if (!store) {
+
+        return;
+
+    }
+
+    store.selected =
+
+        registro;
+
+    notify(
+
+        store
+
+    );
+
+}
+
+// ============================================================================
+// EDIÇÃO
+// ============================================================================
+
+export function setEditing(
+
+    name,
+
+    registro
+
+) {
+
+    const store =
+
+        getState(
+
+            name
+
+        );
+
+    if (!store) {
+
+        return;
+
+    }
+
+    store.editing =
+
+        registro;
+
+    notify(
+
+        store
+
+    );
+
+}
+
+// ============================================================================
 // RESET
 // ============================================================================
 
@@ -217,17 +363,13 @@ export function reset(
 
     }
 
-    Object.keys(
+    store.data = {};
 
-        store.data
+    store.selected = null;
 
-    ).forEach(
+    store.editing = null;
 
-        chave =>
-
-            delete store.data[chave]
-
-    );
+    store.loading = false;
 
     notify(
 
@@ -256,7 +398,7 @@ export function destroyState(
 }
 
 // ============================================================================
-// OBSERVAR
+// SUBSCRIBE
 // ============================================================================
 
 export function subscribe(
@@ -290,7 +432,7 @@ export function subscribe(
 }
 
 // ============================================================================
-// REMOVER OBSERVADOR
+// UNSUBSCRIBE
 // ============================================================================
 
 export function unsubscribe(
@@ -324,7 +466,7 @@ export function unsubscribe(
 }
 
 // ============================================================================
-// NOTIFICAR
+// NOTIFY
 // ============================================================================
 
 function notify(
@@ -339,7 +481,7 @@ function notify(
 
             listener(
 
-                store.data
+                store
 
             )
 
@@ -379,6 +521,15 @@ export function getStates() {
 
 }
 
+// ============================================================================
+// LIMPAR TODOS
+// ============================================================================
+
+export function clearStates() {
+
+    stores.clear();
+
+}
 
 /*
 
